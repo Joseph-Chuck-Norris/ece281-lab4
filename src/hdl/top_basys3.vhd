@@ -116,6 +116,18 @@ component elevator_controller_fsm is
          );
          end component clock_divider;
     
+    component TDM4 is
+             generic ( constant k_WIDTH : natural  := 4); -- bits in input and output
+             Port ( i_clk        : in  STD_LOGIC;
+                    i_reset      : in  STD_LOGIC; -- asynchronous
+                    i_D3         : in  STD_LOGIC_VECTOR (k_WIDTH - 1 downto 0);
+                    i_D2         : in  STD_LOGIC_VECTOR (k_WIDTH - 1 downto 0);
+                    i_D1         : in  STD_LOGIC_VECTOR (k_WIDTH - 1 downto 0);
+                    i_D0         : in  STD_LOGIC_VECTOR (k_WIDTH - 1 downto 0);
+                    o_data       : out STD_LOGIC_VECTOR (k_WIDTH - 1 downto 0);
+                    o_sel        : out STD_LOGIC_VECTOR (3 downto 0)    -- selected data line (one-cold)
+             );
+         end component TDM4;
     
     signal w_clk : std_logic ;
     signal w_floor : std_logic_vector(3 downto 0) ;
@@ -127,7 +139,7 @@ begin
                i_reset => btnR or btnU,
                i_stop => sw(0),
                i_up_down => sw(1),
-               o_floor => w_floor    
+               o_floor => w_floor
              );
              
     svnSgDcdr_inst : sevenSegDecoder 
@@ -143,6 +155,18 @@ begin
     i_reset => btnL or btnU,
     o_clk => w_clk
     );
+    
+     TDM4_inst : TDM4
+         Port map ( i_clk => w_clk,
+                    i_reset => btnR or btnU,
+                    i_D3 => w_floor,
+                    i_D2 => w_floor,
+                    i_D1 => (others => '0'),
+                    i_D0 => (others => '0'),
+                    o_data => w_floor,
+                    o_sel => an(3 downto 2)
+                 );
+
 	
 	-- CONCURRENT STATEMENTS ----------------------------
 	
@@ -153,7 +177,7 @@ begin
 	
 	-- wire up active-low 7SD anodes (an) as required
 	-- Tie any unused anodes to power ('1') to keep them off
-	an(3) <= '1';
+	an(3) <= '0';
 	an(1 downto 0) <= (others => '1');
 	an(2) <= '0';
 	
