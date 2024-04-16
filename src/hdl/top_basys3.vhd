@@ -129,21 +129,28 @@ component elevator_controller_fsm is
              );
          end component TDM4;
     
+    constant k_WIDTH : natural := 4;
     signal w_clk : std_logic ;
-    signal w_floor : std_logic_vector(3 downto 0) ;
+    signal w_clk2 : std_logic;
+    signal w_floor : std_logic_vector(3 downto 0);
+    signal w_ones : std_logic_vector(k_WIDTH - 1 downto 0);
+    signal w_tens : std_logic_vector(k_WIDTH - 1 downto 0);
+    signal w_evtr_ctlr_reset : std_logic;
+    signal w_clk_reset : std_logic;
+    signal w_data : std_logic_vector(3 downto 0);
     
 begin
 	-- PORT MAPS ----------------------------------------
     evtr_ctlr_fsm_inst : elevator_controller_fsm
         Port map ( i_clk => w_clk,  
-               i_reset => btnR or btnU,
+               i_reset => w_evtr_ctlr_reset,
                i_stop => sw(0),
                i_up_down => sw(1),
                o_floor => w_floor
              );
              
     svnSgDcdr_inst : sevenSegDecoder 
-        Port map ( i_D => w_floor,
+        Port map ( i_D => w_data,
                    o_S => seg(6 downto 0)
                    );
             
@@ -152,19 +159,27 @@ begin
    generic map ( k_DIV => 25000000)
    port map (
     i_clk => clk,
-    i_reset => btnL or btnU,
+    i_reset => w_clk_reset,
     o_clk => w_clk
     );
     
+       clkdiv2_inst : clock_divider
+    generic map ( k_DIV => 2500)
+    port map (
+     i_clk => clk,
+     i_reset => '0',
+     o_clk => w_clk2
+     );
+    
      TDM4_inst : TDM4
-         Port map ( i_clk => w_clk,
-                    i_reset => btnR or btnU,
-                    i_D3 => w_floor,
-                    i_D2 => w_floor,
-                    i_D1 => (others => '0'),
-                    i_D0 => (others => '0'),
-                    o_data => w_floor,
-                    o_sel => an(3 downto 2)
+         Port map ( i_clk => w_clk2,
+                    i_reset =>  w_evtr_ctlr_reset,
+                    i_D3 => w_tens,
+                    i_D2 => w_ones,
+                    i_D1 => "0000",
+                    i_D0 => "0000",
+                    o_data => w_data,
+                    o_sel => an
                  );
 
 	
@@ -174,11 +189,37 @@ begin
 	led(14 downto 0) <= (others => '0');
     led(15) <= w_clk;
 	-- leave unused switches UNCONNECTED. Ignore any warnings this causes.
-	
+	 w_evtr_ctlr_reset <= btnR or btnU;
+	 w_clk_reset <= btnL or btnU;
+	 w_tens <= "0001" when (w_floor = "1010" ) else
+	           "0001" when (w_floor = "1011" ) else
+	           "0001" when (w_floor = "1100" ) else
+	           "0001" when (w_floor = "1101" ) else
+	           "0001" when (w_floor = "1110" ) else
+	           "0001" when (w_floor = "1111" ) else
+	           "0001" when (w_floor = "0000" ) else
+	           "0000";
+	 w_ones <= "0001" when (w_floor = "0001" ) else
+	           "0010" when (w_floor = "0010" ) else
+	           "0011" when (w_floor = "0011" ) else
+	           "0100" when (w_floor = "0100" ) else
+	           "0101" when (w_floor = "0101" ) else
+	           "0110" when (w_floor = "0110" ) else
+	           "0111" when (w_floor = "0111" ) else
+	           "1000" when (w_floor = "1000" ) else
+	           "1001" when (w_floor = "1001" ) else
+	           "0000" when (w_floor = "1010" ) else
+	           "0001" when (w_floor = "1011" ) else
+               "0010" when (w_floor = "1100" ) else
+               "0011" when (w_floor = "1101" ) else
+               "0100" when (w_floor = "1110" ) else
+               "0101" when (w_floor = "1111" ) else
+               "0110" when (w_floor = "0000" ) else
+               "0000";
+	           
 	-- wire up active-low 7SD anodes (an) as required
 	-- Tie any unused anodes to power ('1') to keep them off
-	an(3) <= '0';
-	an(1 downto 0) <= (others => '1');
-	an(2) <= '0';
+	an(1) <= '1';
+	an(0) <= '1';
 	
 end top_basys3_arch;
