@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="38" Path="C:/Users/Joseph.Norris/Desktop/code/ece281-lab4/elevator_fsm.xpr">
+<Project Version="7" Minor="38" Path="C:/Users/Jamar.Price/OneDrive - afacademy.af.edu/ECE/ECE 281/Labs/ece281-lab4/elevator_fsm.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="b1c0a845f5be438ba899898319c7b414"/>
@@ -33,7 +33,7 @@
     <Option Name="DSAVendor" Val="xilinx"/>
     <Option Name="DSABoardId" Val="basys3"/>
     <Option Name="DSANumComputeUnits" Val="60"/>
-    <Option Name="WTXSimLaunchSim" Val="2"/>
+    <Option Name="WTXSimLaunchSim" Val="0"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -61,12 +61,6 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/src/hdl/TDM4.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PPRDIR/src/hdl/clock_divider.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -75,22 +69,39 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/hdl/elevator_controller_fsm.vhd">
         <FileInfo>
+<<<<<<< HEAD
           <Attr Name="ImportPath" Val="$PPRDIR/../ece281-ice5/src/hdl/elevator_controller_fsm.vhd"/>
           <Attr Name="ImportTime" Val="1713239688"/>
+=======
+          <Attr Name="ImportPath" Val="$PPRDIR/../Lab 4/ece281-lab4/src/hdl/elevator_controller_fsm.vhd"/>
+          <Attr Name="ImportTime" Val="1712184816"/>
+>>>>>>> 8d8c14c8b17017ce23f6cb1350fe60d6ee3d3635
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/imports/hdl/sevenSegDecoder.vhd">
         <FileInfo>
+<<<<<<< HEAD
           <Attr Name="ImportPath" Val="$PPRDIR/../ece281-lab2/src/hdl/sevenSegDecoder.vhd"/>
           <Attr Name="ImportTime" Val="1708921033"/>
+=======
+          <Attr Name="ImportPath" Val="$PPRDIR/../Lab 4/ece281-lab4/src/hdl/sevenSegDecoder.vhd"/>
+          <Attr Name="ImportTime" Val="1709073935"/>
+>>>>>>> 8d8c14c8b17017ce23f6cb1350fe60d6ee3d3635
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PPRDIR/src/hdl/top_basys3.vhd">
         <FileInfo SFType="VHDL2008">
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/src/hdl/TDM4.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -120,6 +131,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+<<<<<<< HEAD
       <File Path="$PSRCDIR/sim_1/imports/code/ece281-lab2/src/hdl/sevenSegDecoder_tb.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
@@ -138,6 +150,8 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+=======
+>>>>>>> 8d8c14c8b17017ce23f6cb1350fe60d6ee3d3635
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="clock_divider_tb"/>
